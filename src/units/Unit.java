@@ -22,13 +22,15 @@ public abstract class Unit extends JComponent {
 	GraphicModel graphicModel = null;
 	Health health = null;
 	Strength strength = null;
-	Position position = null;
+	UnitPosition position = null;
 	MovementSpeed movementSpeed = null;
 	SpaceVolume spaceVolume = null;
 
-	abstract boolean move(Direction.Course course);
+	protected abstract boolean move(Direction.Course course);
+	
+	protected abstract boolean move(Position position);
 
-	abstract boolean attack(Unit target);
+	protected abstract boolean attack(Unit target);
 
 	@Override
 	protected void paintComponent(Graphics g) {

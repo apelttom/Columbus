@@ -5,13 +5,13 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.interfaces.IVisitorPatternElement;
-import core.interfaces.IVisitorPatternVisitor;
+import core.interfaces.IVisitor;
+import core.interfaces.IVisitableUnit;
 import model.Direction;
 
-public class MainWindowKeyListener implements KeyListener, IVisitorPatternElement {
+public class MainWindowKeyListener implements KeyListener, IVisitor {
 
-	private List<IVisitorPatternVisitor> visitables;
+	private List<IVisitableUnit> visitables;
 
 	@Override
 	public void keyPressed(KeyEvent arg0) {
@@ -47,7 +47,7 @@ public class MainWindowKeyListener implements KeyListener, IVisitorPatternElemen
 	}
 
 	@Override
-	public void accept(IVisitorPatternVisitor visitor) {
+	public void accept(IVisitableUnit visitor) {
 		if (visitables == null) {
 			visitables = new ArrayList<>();
 		}
@@ -56,7 +56,7 @@ public class MainWindowKeyListener implements KeyListener, IVisitorPatternElemen
 
 	private void visit(Direction.Course course) {
 		if (visitables != null) {
-			for (IVisitorPatternVisitor visitable : visitables) {
+			for (IVisitableUnit visitable : visitables) {
 				visitable.visit(course);
 			}
 		}
