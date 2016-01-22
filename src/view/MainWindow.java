@@ -1,9 +1,9 @@
-package gui;
+package view;
 
 import javax.swing.JFrame;
 
-import core.listeners.MainWindowKeyListener;
-import units.GreenUnit;
+import controller.listeners.MainWindowKeyListener;
+import model.units.GreenUnit;
 
 public class MainWindow {
 	

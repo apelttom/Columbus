@@ -1,6 +1,6 @@
 package command.wrapper;
 
-import units.UnitPosition;
+import model.units.UnitPosition;
 
 public class CommandWrapper {
 

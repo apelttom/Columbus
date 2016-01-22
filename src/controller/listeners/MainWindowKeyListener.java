@@ -1,12 +1,12 @@
-package core.listeners;
+package controller.listeners;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import core.interfaces.IVisitor;
-import core.interfaces.IVisitableUnit;
+import controller.interfaces.IVisitableUnit;
+import controller.interfaces.IVisitor;
 import model.Direction;
 
 public class MainWindowKeyListener implements KeyListener, IVisitor {

@@ -1,16 +1,16 @@
-package units;
+package model.units;
 
 import java.awt.Graphics;
 
 import javax.swing.JComponent;
 
-import core.Position;
-import gui.GraphicModel;
+import controller.core.CartesianPosition;
 import model.Direction;
 import model.Health;
 import model.MovementSpeed;
 import model.SpaceVolume;
 import model.Strength;
+import view.GraphicModel;
 
 public abstract class Unit extends JComponent {
 
@@ -28,7 +28,7 @@ public abstract class Unit extends JComponent {
 
 	protected abstract boolean move(Direction.Course course);
 	
-	protected abstract boolean move(Position position);
+	protected abstract boolean move(CartesianPosition position);
 
 	protected abstract boolean attack(Unit target);
 

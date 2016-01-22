@@ -1,6 +1,6 @@
-package core;
+package controller.core;
 
-public class Position {
+public class CartesianPosition {
 
 	protected int x = 5;
 	protected int y = 5;

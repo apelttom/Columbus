@@ -1,4 +1,4 @@
-package core;
+package controller.core;
 
 import command.Command;
 import command.MoveInDirectionCommandFactory;
@@ -6,7 +6,7 @@ import command.wrapper.ChangeFacingCommandWrapper;
 import command.wrapper.DirectionMoveParameterWrapper;
 import model.Direction;
 import model.Speed;
-import units.UnitPosition;
+import model.units.UnitPosition;
 
 /**
  * Based on type of the action invoked by switch in Position does the logic.
@@ -38,7 +38,7 @@ public class PositionController {
 		return obj;
 	}
 	
-	public boolean movePosition(UnitPosition start, Position end, Speed movementSpeed) {
+	public boolean movePosition(UnitPosition start, CartesianPosition end, Speed movementSpeed) {
 //		Command command = commandFactory.getCommand(start, end, new MovePositionCommandWrapper(end, movementSpeed));
 		return true;
 	}

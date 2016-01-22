@@ -2,7 +2,7 @@ package command.wrapper;
 
 import model.Direction;
 import model.Speed;
-import units.UnitPosition;
+import model.units.UnitPosition;
 
 public class DirectionMoveParameterWrapper extends CommandWrapper {
 

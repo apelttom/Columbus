@@ -1,11 +1,11 @@
-package units;
+package model.units;
 
-import core.Position;
-import core.PositionController;
-import core.interfaces.IVisitableUnit;
-import gui.GraphicModel;
+import controller.core.CartesianPosition;
+import controller.core.PositionController;
+import controller.interfaces.IVisitableUnit;
 import model.Direction;
 import model.MovementSpeed;
+import view.GraphicModel;
 
 /**
  * Simple unit used for testing logic and graphic
@@ -35,7 +35,7 @@ public class GreenUnit extends Unit implements IVisitableUnit {
 		return false;
 	}
 	
-	protected boolean move(Position position){
+	protected boolean move(CartesianPosition position){
 		if(PositionController.getInstance().movePosition(this.position, position, movementSpeed)){
 			paintComponent(getGraphics());
 			getRootPane().repaint();
@@ -51,7 +51,7 @@ public class GreenUnit extends Unit implements IVisitableUnit {
 	}
 
 	@Override
-	public void visit(Position position) {
+	public void visit(CartesianPosition position) {
 		move(position);		
 	}
 
