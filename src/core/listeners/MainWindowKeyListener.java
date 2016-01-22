@@ -57,6 +57,7 @@ public class MainWindowKeyListener implements KeyListener, IVisitor {
 	private void visit(Direction.Course course) {
 		if (visitables != null) {
 			for (IVisitableUnit visitable : visitables) {
+//				TODO: fix this
 				visitable.visit(course);
 			}
 		}

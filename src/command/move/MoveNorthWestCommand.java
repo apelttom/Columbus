@@ -1,16 +1,16 @@
 package command.move;
 
-import command.wrapper.MovePositionCommandWrapper;
+import command.wrapper.DirectionMoveParameterWrapper;
 
 public class MoveNorthWestCommand extends MoveCommand {
 
-	public MoveNorthWestCommand(MovePositionCommandWrapper wrapper) {
+	public MoveNorthWestCommand(DirectionMoveParameterWrapper wrapper) {
 		super(wrapper);
 	}
 
 	@Override
 	public void execute() {
-		wrapper.getPosition().moveNorthWest(wrapper.getSpeed());
+		directionMoveWrapper.getPosition().moveNorthWest(directionMoveWrapper.getSpeed());
 	}
 
 }

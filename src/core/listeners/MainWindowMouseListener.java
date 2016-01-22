@@ -15,8 +15,9 @@ public class MainWindowMouseListener implements MouseListener, IVisitor {
 	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
-		Position
-		visit(arg0.getX(),arg0.getY());
+//		TODO: fix
+//		Position
+//		visit(arg0.getX(),arg0.getY());
 	}
 
 	@Override

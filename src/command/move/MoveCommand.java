@@ -1,14 +1,14 @@
 package command.move;
 
 import command.Command;
-import command.wrapper.MovePositionCommandWrapper;
+import command.wrapper.DirectionMoveParameterWrapper;
 
 public abstract class MoveCommand implements Command {
 
-	protected MovePositionCommandWrapper wrapper;
+	protected DirectionMoveParameterWrapper directionMoveWrapper;
 	
-	protected MoveCommand(MovePositionCommandWrapper wrapper) {
-		this.wrapper = wrapper;
+	protected MoveCommand(DirectionMoveParameterWrapper wrapper) {
+		this.directionMoveWrapper = wrapper;
 	}
 	
 	@Override

@@ -1,11 +1,10 @@
 package core;
 
 import command.Command;
-import command.CommandFactory;
+import command.MoveInDirectionCommandFactory;
 import command.wrapper.ChangeFacingCommandWrapper;
-import command.wrapper.MovePositionCommandWrapper;
+import command.wrapper.DirectionMoveParameterWrapper;
 import model.Direction;
-import model.MovementSpeed;
 import model.Speed;
 import units.UnitPosition;
 
@@ -19,10 +18,10 @@ public class PositionController {
 
 	private static final Object lock = new Object();
 	private static PositionController instance;
-	private static CommandFactory commandFactory;
+	private static MoveInDirectionCommandFactory commandFactory;
 
 	private PositionController(){
-		commandFactory = new CommandFactory();
+		commandFactory = new MoveInDirectionCommandFactory();
 	}
 
 	public static PositionController getInstance() {
@@ -39,12 +38,13 @@ public class PositionController {
 		return obj;
 	}
 	
-	public boolean movePosition(UnitPosition start, Position end, MovementSpeed movementSpeed) {
-		Command command = commandFactory.getCommand(start, end, new MovePositionCommandWrapper(end, speed));
+	public boolean movePosition(UnitPosition start, Position end, Speed movementSpeed) {
+//		Command command = commandFactory.getCommand(start, end, new MovePositionCommandWrapper(end, movementSpeed));
+		return true;
 	}
 	
 	public boolean movePosition(UnitPosition position, Direction.Course course, Speed speed) {
-		Command command = commandFactory.getCommand(course, new MovePositionCommandWrapper(position, speed));
+		Command command = commandFactory.createCommand(new DirectionMoveParameterWrapper(position, speed, course));
 		try {
 			command.execute();
 //			TODO: Write the proper exception if movement is not possible
@@ -55,7 +55,8 @@ public class PositionController {
 	}
 	
 	public boolean changeFacing(UnitPosition position, Direction.Course course) {
-		Command command = commandFactory.getCommand(course, new ChangeFacingCommandWrapper(position));
+		//TODO: fix asap. Needed?
+		Command command = commandFactory.createCommand(new ChangeFacingCommandWrapper(position));
 		executeCommand(command);
 		return true;
 	}
@@ -65,7 +66,7 @@ public class PositionController {
 			command.execute();
 //			TODO: Write the proper exception if movement is not possible
 		} catch (Exception e) {
-			System.err.println("Moving command failed!");
+			System.err.println("Command execution has failed!");
 			e.printStackTrace();
 		}
 	}

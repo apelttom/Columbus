@@ -1,6 +1,7 @@
 package core.interfaces;
 
 import core.Position;
+import model.Direction;
 
 /**
  * TODO: find out how pattern visitor works and possibly create VisitorFactory
@@ -11,4 +12,5 @@ import core.Position;
 public interface IVisitableUnit {
 
 	public void visit(Position position);
+	public void visit(Direction.Course course);
 }

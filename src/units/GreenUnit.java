@@ -55,4 +55,8 @@ public class GreenUnit extends Unit implements IVisitableUnit {
 		move(position);		
 	}
 
+	@Override
+	public void visit(Direction.Course course) {
+		move(course);		
+	}
 }

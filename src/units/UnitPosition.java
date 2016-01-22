@@ -46,6 +46,11 @@ public class UnitPosition extends Position {
 		moveEast(speed);
 	}
 
+	public void moveNorthWest(Speed speed) {
+		moveNorth(speed);
+		moveWest(speed);
+	}
+
 	public void moveSouthEast(Speed speed) {
 		moveSouth(speed);
 		moveEast(speed);
@@ -53,11 +58,6 @@ public class UnitPosition extends Position {
 
 	public void moveSouthWest(Speed speed) {
 		moveSouth(speed);
-		moveWest(speed);
-	}
-
-	public void moveNorthWest(Speed speed) {
-		moveNorth(speed);
 		moveWest(speed);
 	}
 }
