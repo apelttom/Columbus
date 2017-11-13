@@ -1,24 +1,28 @@
 package controller.core;
 
-public class CartesianPosition {
+import java.awt.Point;
 
-	protected int x = 5;
-	protected int y = 5;
+public class CartesianPosition extends Point {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1406726989987136425L;
 	
-	public int getX() {
+	protected int x;
+	protected int y;
+	
+	public CartesianPosition(double x, double y){
+		this.x = (int) x;
+		this.y = (int) y;
+	}
+	
+	public double getX() {
 		return x;
 	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
+	
+	public double getY() {
 		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
 	}
 	
 }

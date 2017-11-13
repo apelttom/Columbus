@@ -18,11 +18,12 @@ public class GreenUnit extends Unit implements IVisitableUnit {
 	 * Serial Version UI
 	 */
 	private static final long serialVersionUID = 6668619930035425813L;
+	private static final UnitPosition DEFAULT_UNIT_POSITION = new UnitPosition(10, 10);
 
 	public GreenUnit() {
 		graphicModel = new GraphicModel("graphics/greenUnit.png");
 		movementSpeed = new MovementSpeed();
-		position = new UnitPosition();
+		position = DEFAULT_UNIT_POSITION;
 	}
 	
 	@Override

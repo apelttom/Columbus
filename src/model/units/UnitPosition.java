@@ -15,6 +15,10 @@ import model.Speed;
  */
 public class UnitPosition extends CartesianPosition {
 
+	public UnitPosition(int x, int y) {
+		super(x, y);
+	}
+
 	private Direction.Course facing = Direction.Course.NORTH;
 
 	public Direction.Course getFacing() {

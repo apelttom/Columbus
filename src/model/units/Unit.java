@@ -35,6 +35,6 @@ public abstract class Unit extends JComponent {
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		graphicModel.getUnitImage().paintIcon(this, g, position.getX(), position.getY());
+		graphicModel.getUnitImage().paintIcon(this, g, (int) position.getX(), (int) position.getY());
 	}
 }

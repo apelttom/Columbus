@@ -1,5 +1,9 @@
 package model.board;
 
+import java.awt.geom.Point2D;
+
+import controller.core.CartesianPosition;
+
 public class HexPosition {
 	
 	/*
@@ -8,9 +12,10 @@ public class HexPosition {
 	private int x;
 	private int y;
 	private int z;
-	private int hexCenter;
+	private CartesianPosition hexCenter;
 	
-	public HexPosition(int x, int y, int z, int hexCenter) {
+	
+	public HexPosition(int x, int y, int z, CartesianPosition hexCenter) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
@@ -29,8 +34,9 @@ public class HexPosition {
 		return z;
 	}
 
-	public int getHexCenter() {
+	public CartesianPosition getHexCenter() {
 		return hexCenter;
 	}
+	
 
 }
