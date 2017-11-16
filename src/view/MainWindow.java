@@ -25,9 +25,10 @@ public class MainWindow extends JFrame {
         Graphics2D g2 = (Graphics2D) g;
 //        Line2D lin = new Line2D.Float(100, 100, 250, 260);
 		HexBoard hexBoard = new HexBoard();
-		g2.drawLine((int)hexBoard.getHex().getCorner(5).getX(), (int)hexBoard.getHex().getCorner(5).getY(), (int)hexBoard.getHex().getCorner(0).getX(), (int)hexBoard.getHex().getCorner(0).getY());
-		for (int i = 0; i < 5; i++) {
-			g2.drawLine((int)hexBoard.getHex().getCorner(i).getX(), (int)hexBoard.getHex().getCorner(i).getY(), (int)hexBoard.getHex().getCorner(i+1).getX(), (int)hexBoard.getHex().getCorner(i+1).getY());
+		for (int i = 0; i <= 5; i++) {
+			int drawLineFromIndex = i;
+			int drawLineToIndex = (i+1) % 6;
+			g2.drawLine((int)hexBoard.getHex().getCorner(drawLineFromIndex).getX(), (int)hexBoard.getHex().getCorner(drawLineFromIndex).getY(), (int)hexBoard.getHex().getCorner(drawLineToIndex).getX(), (int)hexBoard.getHex().getCorner(drawLineToIndex).getY());
 		}
 //        g2.draw(lin);
     }

@@ -6,6 +6,7 @@ public class Hex {
 	
 	private HexPosition hexPosition;
 	private HexDimensions hexDimensions;
+	// all corners starting from the top one. Point-top oriented 
 	private CartesianPosition corners[] = new CartesianPosition[6];
 	
 	public Hex(){
@@ -34,6 +35,12 @@ public class Hex {
 		return hexDimensions;
 	}
 	
+	/**
+	 * Corner on index 0 is at the top, next corners continue in counter clock-wise order.
+	 * There is only six corners
+	 * @param index number from 0 to 5 identifying corner, you want to get coordinates to
+	 * @return Cartesian point on the canvas where the current corner should be located
+	 */
 	public CartesianPosition getCorner(int index){
 		return corners[index];
 	}
