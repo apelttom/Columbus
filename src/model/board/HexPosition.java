@@ -1,7 +1,5 @@
 package model.board;
 
-import java.awt.geom.Point2D;
-
 import controller.core.CartesianPosition;
 
 public class HexPosition {

@@ -8,10 +8,11 @@ import javax.swing.JFrame;
 import controller.listeners.MainWindowKeyListener;
 import model.board.HexBoard;
 import model.units.GreenUnit;
-import view.painter.HexPainter;
 
 public class MainWindow extends JFrame {
 	
+	private static final long serialVersionUID = 952738263991002651L;
+
 	/**
 	 * Main window containing the graphics elements of Columbus game
 	 * @param args - arguments from input in command line mode
@@ -21,25 +22,35 @@ public class MainWindow extends JFrame {
 	}
 	
 	public void paint(Graphics g) {
-        super.paint(g);  // fixes the immediate problem.
+        super.paint(g);
         Graphics2D g2 = (Graphics2D) g;
-//        Line2D lin = new Line2D.Float(100, 100, 250, 260);
-		HexBoard hexBoard = new HexBoard();
-		for (int i = 0; i <= 5; i++) {
-			int drawLineFromIndex = i;
-			int drawLineToIndex = (i+1) % 6;
-			g2.drawLine((int)hexBoard.getHex().getCorner(drawLineFromIndex).getX(), (int)hexBoard.getHex().getCorner(drawLineFromIndex).getY(), (int)hexBoard.getHex().getCorner(drawLineToIndex).getX(), (int)hexBoard.getHex().getCorner(drawLineToIndex).getY());
-		}
-//        g2.draw(lin);
+		HexBoard hexBoard = new HexBoard(this.getWidth(), this.getHeight());
+		hexBoard.paintBoard(g2);
+		
+		/*
+		 * This part serves as visual representation of the the diagonal directions 
+        double axeXmiddle = this.getHeight()/2;
+        double axeYmiddle = this.getWidth()/2;
+        CartesianPosition middle = new CartesianPosition(axeXmiddle, axeYmiddle);
+        g2.drawLine(0, (int) axeYmiddle, this.getWidth(), (int) axeYmiddle);
+        g2.drawLine((int) axeXmiddle, 0, (int) axeXmiddle, this.getHeight());
+        // change 120 to another multiple by 60 and you get another diagonal direction
+        double vector_rad = Math.PI / 180 * 120;
+        double newXpoint = axeXmiddle + Math.cos(vector_rad) * 40;
+        double newYpoint = axeYmiddle + Math.sin(vector_rad) * 40;
+        System.out.println(newXpoint);
+        System.out.println(newYpoint);
+        g2.drawLine((int) axeXmiddle, (int) axeYmiddle, (int) newXpoint, (int) newYpoint);
+         */
     }
 	
 	public static void main(String[] args){
 		MainWindow mainWindow = new MainWindow();
-		GreenUnit greenUnit = new GreenUnit();
-		MainWindowKeyListener keyListener = new MainWindowKeyListener();
-		keyListener.accept(greenUnit);
-		mainWindow.add(greenUnit);
-		mainWindow.addKeyListener(keyListener);
+//		GreenUnit greenUnit = new GreenUnit();
+//		MainWindowKeyListener keyListener = new MainWindowKeyListener();
+//		keyListener.accept(greenUnit);
+//		mainWindow.add(greenUnit);
+//		mainWindow.addKeyListener(keyListener);
 		mainWindow.setSize(300, 300);
 		mainWindow.setVisible(true);
 	}
