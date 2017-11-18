@@ -1,2 +1,2 @@
 # Columbus
-The Columbus game
+The Columbus game engine
