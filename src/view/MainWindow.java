@@ -51,7 +51,7 @@ public class MainWindow extends JFrame {
 //		keyListener.accept(greenUnit);
 //		mainWindow.add(greenUnit);
 //		mainWindow.addKeyListener(keyListener);
-		mainWindow.setSize(300, 300);
+		mainWindow.setSize(1024, 290);
 		mainWindow.setVisible(true);
 	}
 }
