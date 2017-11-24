@@ -1,5 +1,6 @@
 package model.board;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import controller.core.CartesianPosition;

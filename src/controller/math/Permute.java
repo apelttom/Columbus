@@ -1,4 +1,4 @@
-package math;
+package controller.math;
 
 import java.util.Arrays;
 import java.util.LinkedList;

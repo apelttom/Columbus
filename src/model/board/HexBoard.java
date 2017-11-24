@@ -7,80 +7,76 @@ import controller.core.CartesianPosition;
 
 public class HexBoard {
 
-	private Hex centralHex;
 	private int userDefinedHexSize = -1;
 	private HexDimensions boardSettingsHexDimension;
+//	unused now -> delete?
+	private int boardSettingsWidth;
+	private int boardSettingsHeight;
 	private int maxHexesColumns;
-	private int maxHexesRows;
-	private ArrayList<ArrayList<Hex>> boardMap;
-	private int boardMapColumns;
+	// private ArrayList<ArrayList<Hex>> boardMap;
+	private ArrayList<Hex> boardMap;
 
-	public static final int DEFAULT_SIZE = 30;
+	public static final int DEFAULT_SIZE = 24;
 
-	public HexBoard(int maxWidth, int maxHeight) {
-		// This part serves as the movement range calculator. Originaly I wanted
-		// to use it as a board creator, but then I understood better
-		// ArrayList<Hex> board = new ArrayList<>();
-		// int n = 2;
-		// for (int dx = -n; dx < n; dx++) {
-		// for (int dy = Math.max(-n, -dx-n); dy < Math.min(n, -dx+n); dy++) {
-		// int dz = -dx-dy;
-		// board.add(new Hex(new HexPosition(dx, dy, dz,
-		// createNewHexCenterPoint(dx,dy,dz))));
-		// }
-		// }
+	/**
+	 * Used for creation of the rectangle shaped hexagon board
+	 * 
+	 * @param boardWidth
+	 * @param boardHeight
+	 */
+	public HexBoard(int boardWidth, int boardHeight) {
+		// if user have not defined Hex dimension, engine use the
+		// default one
 		if (this.userDefinedHexSize == -1) {
 			this.boardSettingsHexDimension = new HexDimensions(DEFAULT_SIZE);
 		} else {
 			this.boardSettingsHexDimension = new HexDimensions(this.userDefinedHexSize);
 		}
-		/**
-		 * As pictured in https://www.redblobgames.com/grids/hexagons/#basics first we calculate how many
-		 * "tiles" can be put on the board. One tile contains 2x2 hexes. Next we multiply by two in order to
-		 * discover the real maximal amount of hexes that would fit into board
-		 * 
-		 *  TODO: try different approach, this is not gonna work well, the error is cumulating
-		 *  maybe if you would check that hex is not gonna cross the line of the border for every generated hex. That should do.
-		 *  Then move the logic of board Hex rows and columns to the generator part
-		 *  
-		 *  Even better! check if there can be more hexes only when the last one hex is created!
+		this.boardSettingsWidth = boardWidth;
+		this.boardSettingsHeight = boardHeight;
+
+		// engine is able to calculate how many columns of hexes it will need
+		double correctedBoardWidth = boardWidth - (1 / 2D * boardSettingsHexDimension.getWidth());
+		this.maxHexesColumns = (int) (correctedBoardWidth / (double) boardSettingsHexDimension.getWidth());
+
+		boardMap = new ArrayList<Hex>();
+
+		/*
+		 * due to the loss of precision engine is not able to calculate precise
+		 * number of rows and have to stop creating them when it touches the
+		 * border. First we check if the new Y position of next Hex would not
+		 * cross the border of the maximum board height (after a small
+		 * correction). More info on https://www.redblobgames.com/grids/hexagons/#basics
 		 */
-		double maxColumnsHexTiles = maxWidth / ((5/2D) * boardSettingsHexDimension.getWidth());
-		this.maxHexesColumns = (int) (maxColumnsHexTiles * 2D);
-		double maxRowsHexTiles = maxHeight / ((7/4D) * boardSettingsHexDimension.getHeight());
-//		TODO: this round is not propper. There should be rounding base on the tile percantage of hex
-		this.maxHexesRows = (int) Math.round(maxRowsHexTiles * 2D);
-//		TODO: this round is not propper. There should be rounding base on the tile percantage of hex		
-		this.boardMapColumns = (int) Math.round(maxHexesColumns + (maxHexesRows / 2));
-//		this.board = new ArrayList<new ArrayList<Hex>()>();
-
-		// centralHex = new Hex(new HexPosition(0, 0, 0, new
-		// CartesianPosition(150, 150)), new HexDimensions(DEFAULT_SIZE));
-	}
-
-	public Hex getCentralHex() {
-		return centralHex;
+		for (int i = 0;; i = i + 1) {
+			double newCenterY = (((i + 1) * (3 / 4D * boardSettingsHexDimension.getHeight()))
+					- (1 / 4D * boardSettingsHexDimension.getHeight()));
+			double limitPointForY = boardSettingsHeight - (1 / 2D * boardSettingsHexDimension.getHeight());
+			if (newCenterY > limitPointForY) {
+				break;
+			}
+			for (int j = 0; j < maxHexesColumns; j = j + 1) {
+				double newCenterX = ((((j + 1) * boardSettingsHexDimension.getWidth()
+						- (1 / 2D * boardSettingsHexDimension.getWidth()))
+						+ (i % 2) * (1 / 2D * boardSettingsHexDimension.getWidth())));
+				CartesianPosition hexCenter = new CartesianPosition(newCenterX, newCenterY);
+				boardMap.add(new Hex(new HexPosition(j, i, (-j - i), hexCenter),
+						boardSettingsHexDimension.getSize()));
+			}
+		}
+//		System.out.println("Num of hexes: " + boardMap.size());
 	}
 
 	/**
-	 * working and painting hex board. TODO: create data structure to hold Hexes and add them coordinates at creation
+	 * painting the board works like charm.
+	 * TODO: is time to create a proper data structure to hold the hexes
+	 * 
 	 * @param g2
 	 */
 	public void paintBoard(Graphics2D g2) {
-		for (int i = 0; i < maxHexesRows; i++) {
-			for (int j = 0; j < maxHexesColumns; j++) {
-				double newCenterX = ((((j+1) * boardSettingsHexDimension.getWidth() - (1 / 2D * boardSettingsHexDimension.getWidth()))
-						+ (i % 2) * (1 / 2D * boardSettingsHexDimension.getWidth())));
-				// double newCenterX =
-				// (boardSettingsHexDimension.getWidth()*(j+1)) +50;
-				// double newCenterY = (i+ (1/2D *
-				// boardSettingsHexDimension.getHeight())) +50;
-				double newCenterY = (((i+1) * (3/4D * boardSettingsHexDimension.getHeight()))
-						- (1 / 4D * boardSettingsHexDimension.getHeight()));
-				CartesianPosition hexCenter = new CartesianPosition(newCenterX, newCenterY);
-				g2.drawRect((int) newCenterX, (int) newCenterY, 1, 1);
-				new Hex(new HexPosition(j, i, -j-i, hexCenter), boardSettingsHexDimension.getSize()).paintComponent(g2);
-			}
+		for (Hex hex : boardMap) {
+			hex.paintComponent(g2);
 		}
+		// g2.drawRect((int) newCenterX, (int) newCenterY, 1, 1);
 	}
 }
