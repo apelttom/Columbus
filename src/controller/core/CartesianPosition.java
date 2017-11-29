@@ -9,12 +9,12 @@ public class CartesianPosition extends Point {
 	 */
 	private static final long serialVersionUID = 1406726989987136425L;
 	
-	protected int x;
-	protected int y;
+	protected double x;
+	protected double y;
 	
 	public CartesianPosition(double x, double y){
-		this.x = (int) x;
-		this.y = (int) y;
+		this.x = x;
+		this.y = y;
 	}
 	
 	public double getX() {
