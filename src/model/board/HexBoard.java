@@ -15,8 +15,8 @@ public class HexBoard {
 	private int maxHexesColumns;
 	private int maxHexesRows;
 	// private ArrayList<ArrayList<Hex>> boardMap;
-	private ArrayList<Hex> boardModelTable;
-	private int boardModelTableColumns;
+	private ArrayList<ArrayList<Hex>> boardDataStructure;
+	private int boardDataStructureColumns;
 
 	public static final int DEFAULT_SIZE = 24;
 
@@ -55,17 +55,40 @@ public class HexBoard {
 		double numberOfRowTiles = boardHeight / rowTileWithFixedNumberOfHexes;
 		this.maxHexesRows = (int) (numberOfRowTiles * 7);
 
-		// if(maxHexesRows % 2 == 0){
-		// boardModelTableColumns = maxHexesColumns + (maxHexesRows / 2) - 1;
-		// } else {
-		// boardModelTableColumns = maxHexesColumns + (maxHexesRows / 2);
-		// }
+		int numberOfDataStructureNegativeColumns;
+		 if(maxHexesRows % 2 == 0){
+			 numberOfDataStructureNegativeColumns = (maxHexesRows / 2) - 1;
+			 boardDataStructureColumns = maxHexesColumns + numberOfDataStructureNegativeColumns;
+		 } else {
+			 numberOfDataStructureNegativeColumns = (maxHexesRows / 2);
+			 boardDataStructureColumns = maxHexesColumns + numberOfDataStructureNegativeColumns;
+		 }
+		 int maxBoardDataStructureColumnSize = maxHexesRows;
 
 		// ArrayList<ArrayList<Hex>>(boardModelTableColumns);
-		boardModelTable = new ArrayList<Hex>();
+		 
+		boardDataStructure = new ArrayList<ArrayList<Hex>>(boardDataStructureColumns);
+		System.out.print("Column lengths from the left: ");
+		for (int i = (0 - numberOfDataStructureNegativeColumns); i < 1; i++) {
+//			we have to precalculate how big the column in the data structure will be
+//			this can be done if we will use an offset from the beginning and the end of the data structure that will tell us where full columns start and where it ends
+//			we surely know that 0 will be the first column which has full size, in that case it transforms our question into: where is the 0 column located in the data structure?
+//			we have to calculate how many columns are there before 0 -> nubmer of rows divided by two, because new data structure column starts every second row (first is the start, second is the continuation)
+//			so the number of minus columns will be maxHexesRows / 2 or (maxHexesRows/2)-1 if maxHexesRows is even (we should not calculate 0 row on the beginning)
+//			starting from there we will calculate the length of the current column based on how far it is from 0 column
+//			each step out of the 0 column to the left (into negative numbers) means substracting 2 from the maximal length of the data structure column
+//			using this approach we are able to hang the calculation on the negative index
+//			to do that we have to create for cycle form the most left negative index up to 0 (and farther)
+			
+			int currentColumnLength = maxBoardDataStructureColumnSize - Math.abs(i * 2);
+			boardDataStructure.add(new ArrayList<Hex>(currentColumnLength));
+			System.out.print(currentColumnLength + ", ");
+		}
+		System.out.println();
 
 		// System.out.println("Data structure size" + boardDataStructureSize);
 
+		
 		for (int i = 0; i < maxHexesRows; i = i + 1) {
 			for (int j = 0; j < maxHexesColumns; j = j + 1) {
 				double newCenterX = ((((j + 1) * boardSettingsHexDimension.getWidth()
@@ -74,7 +97,7 @@ public class HexBoard {
 				double newCenterY = (((i + 1) * (3 / 4D * boardSettingsHexDimension.getHeight()))
 						- (1 / 4D * boardSettingsHexDimension.getHeight()));
 				CartesianPosition hexCenter = new CartesianPosition(newCenterX, newCenterY);
-				boardModelTable
+				boardDataStructure.get(numberOfDataStructureNegativeColumns)
 						.add(new Hex(new HexPosition(j, i, (-j - i), hexCenter), boardSettingsHexDimension.getSize()));
 			}
 		}
@@ -87,11 +110,13 @@ public class HexBoard {
 	 * @param g2
 	 */
 	public void paintBoard(Graphics2D g2) {
-		for (Hex hex : boardModelTable) {
-			hex.paintComponent(g2);
-			g2.drawString(hex.getHexPosition().getX() + ", " + hex.getHexPosition().getY(),
-					(float) hex.getHexPosition().getHexCenter().getX(),
-					(float) hex.getHexPosition().getHexCenter().getY());
+		for (ArrayList<Hex> arrayList : boardDataStructure) {
+			for (Hex hex : arrayList) {
+				hex.paintComponent(g2);
+				g2.drawString(hex.getHexPosition().getX() + ", " + hex.getHexPosition().getY(),
+						(float) hex.getHexPosition().getHexCenter().getX(),
+						(float) hex.getHexPosition().getHexCenter().getY());
+			}
 		}
 		// g2.drawRect((int) newCenterX, (int) newCenterY, 1, 1);
 	}
