@@ -134,30 +134,57 @@ public class HexBoard {
 	 * Iterating through all data structure columns we are able to calculate each column length
 	 * on the fly
 	 */
-	for (int i = beginningIndex; i < endIndex; i++) {
-	    if (i < 1) {
-		int currentColumnLength = dataStructMaxColumnSize - Math.abs(i * 2);
+	for (int dataStructIndex = beginningIndex, m = 0; dataStructIndex < endIndex; dataStructIndex++, m++) {
+	    if (dataStructIndex < 1) {
+		int currentColumnLength = dataStructMaxColumnSize - Math.abs(dataStructIndex * 2);
 		boardDataStructure.add(new ArrayList<Hex>(currentColumnLength));
-	    } else if (i < dataStructIndexOfLastFullColumn) {
+		for (int j = 0; j < currentColumnLength; j++) {
+		    createHexagon(dataStructIndex,j,m);
+		}
+	    } else if (dataStructIndex < dataStructIndexOfLastFullColumn) {
 		boardDataStructure.add(new ArrayList<Hex>(dataStructMaxColumnSize));
+		for (int j = 0; j < dataStructMaxColumnSize; j++) {
+		    createHexagon(dataStructIndex,j,m);
+		}
 	    } else {
-		int currentColumnLength = dataStructMaxColumnSize - Math.abs((dataStructIndexOfLastFullColumn - i) * 2);
+		int currentColumnLength = dataStructMaxColumnSize - Math.abs((dataStructIndexOfLastFullColumn - dataStructIndex) * 2);
 		boardDataStructure.add(new ArrayList<Hex>(currentColumnLength));
+		for (int j = 0; j < currentColumnLength; j++) {
+		    createHexagon(dataStructIndex,j,m);
+		}
 	    }
 	}
 
-	for (int i = 0; i < maxHexesRows; i = i + 1) {
-	    for (int j = 0; j < maxHexesColumns; j = j + 1) {
-		double newCenterX = ((((j + 1) * boardSettingsHexDimension.getWidth()
-			- (1 / 2D * boardSettingsHexDimension.getWidth()))
-			+ (i % 2) * (1 / 2D * boardSettingsHexDimension.getWidth())));
-		double newCenterY = (((i + 1) * (3 / 4D * boardSettingsHexDimension.getHeight()))
-			- (1 / 4D * boardSettingsHexDimension.getHeight()));
-		CartesianPosition hexCenter = new CartesianPosition(newCenterX, newCenterY);
-		boardDataStructure.get(dataStructNumOfPartialFilledColumns)
-			.add(new Hex(new HexPosition(j, i, (-j - i), hexCenter), boardSettingsHexDimension.getSize()));
-	    }
+//	for (int i = 0; i < maxHexesRows; i = i + 1) {
+//	    for (int j = 0; j < maxHexesColumns; j = j + 1) {
+//		double newCenterX = ((((j + 1) * boardSettingsHexDimension.getWidth()
+//			- (1 / 2D * boardSettingsHexDimension.getWidth()))
+//			+ (i % 2) * (1 / 2D * boardSettingsHexDimension.getWidth())));
+//		double newCenterY = (((i + 1) * (3 / 4D * boardSettingsHexDimension.getHeight()))
+//			- (1 / 4D * boardSettingsHexDimension.getHeight()));
+//		CartesianPosition hexCenter = new CartesianPosition(newCenterX, newCenterY);
+//		boardDataStructure.get(dataStructNumOfPartialFilledColumns)
+//			.add(new Hex(new HexPosition(j, i, (-j - i), hexCenter), boardSettingsHexDimension.getSize()));
+//	    }
+//	}
+
+	System.out.print("Length of the arrayLists: ");
+	// testing the data structure
+	for (ArrayList<Hex> arrayList : boardDataStructure) {
+	    System.out.print(arrayList.size() + ", ");
 	}
+	
+    }
+    
+    private void createHexagon(int x, int y, int dataStructColumnIndex){
+	double newCenterX = ((((x + 1) * boardSettingsHexDimension.getWidth()
+		- (1 / 2D * boardSettingsHexDimension.getWidth()))
+		+ (x % 2) * (1 / 2D * boardSettingsHexDimension.getWidth())));
+	double newCenterY = (((y + 1) * (3 / 4D * boardSettingsHexDimension.getHeight()))
+		- (1 / 4D * boardSettingsHexDimension.getHeight()));
+	CartesianPosition hexCenter = new CartesianPosition(newCenterX, newCenterY);
+	boardDataStructure.get(dataStructColumnIndex)
+		.add(new Hex(new HexPosition(x, y, (-x - y), hexCenter), boardSettingsHexDimension.getSize()));
     }
 
     /**
